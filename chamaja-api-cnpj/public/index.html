@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChamaJá · Consulta de CNPJ</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 560px; margin: 40px auto; padding: 0 16px; color: #1d1d1b; }
+    h1 { font-size: 22px; }
+    form { display: flex; gap: 8px; }
+    input { flex: 1; padding: 10px; font-size: 16px; border: 1px solid #bbb; border-radius: 8px; }
+    button { padding: 10px 16px; font-size: 16px; border: 0; border-radius: 8px; background: #1d1d1b; color: #fff; cursor: pointer; }
+    pre { background: #f4f4f2; padding: 12px; border-radius: 8px; white-space: pre-wrap; word-break: break-word; }
+    a { color: inherit; }
+  </style>
+</head>
+<body>
+  <h1>Consulta de CNPJ</h1>
+  <p>Digite um CNPJ, com ou sem pontuação. Documentação completa em <a href="/docs">/docs</a>.</p>
+  <form id="f">
+    <input id="cnpj" value="00.000.000/0001-91" aria-label="CNPJ">
+    <button>Consultar</button>
+  </form>
+  <pre id="saida">O resultado aparece aqui.</pre>
+  <script>
+    document.getElementById("f").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const saida = document.getElementById("saida");
+      saida.textContent = "Consultando...";
+      const cnpj = encodeURIComponent(document.getElementById("cnpj").value.trim());
+      try {
+        const r = await fetch("/cnpj/" + cnpj);
+        saida.textContent = "HTTP " + r.status + "\n\n" + JSON.stringify(await r.json(), null, 2);
+      } catch {
+        saida.textContent = "Não foi possível falar com a API.";
+      }
+    });
+  </script>
+</body>
+</html>

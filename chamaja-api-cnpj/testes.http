@@ -1,0 +1,17 @@
+### Saúde
+GET http://localhost:3000/saude
+
+### CNPJ válido (Banco do Brasil)
+GET http://localhost:3000/cnpj/00000000000191
+
+### Mesmo CNPJ de novo (deve vir do cache)
+GET http://localhost:3000/cnpj/00000000000191
+
+### CNPJ com pontuação (a barra vai como %2F)
+GET http://localhost:3000/cnpj/00.000.000%2F0001-91
+
+### CNPJ inválido (400)
+GET http://localhost:3000/cnpj/00000000000192
+
+### Contrato OpenAPI
+GET http://localhost:3000/openapi.json
